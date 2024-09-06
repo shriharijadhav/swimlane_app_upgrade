@@ -1,8 +1,18 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
-import { Box, Text, Tooltip, Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverBody, IconButton } from '@chakra-ui/react';
+import { Box, Text, Tooltip, Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverBody, IconButton, Button } from '@chakra-ui/react';
 import { FiTrash2 } from 'react-icons/fi';
-
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
+} from '@chakra-ui/react'
+import { ChevronDownIcon } from '@chakra-ui/icons';
 const MovableItem = ({ item, index, laneIndex, onOpenModal, deleteBlock }) => {
   const [{ isDragging }, drag] = useDrag({
     type: 'BLOCK',
@@ -23,7 +33,6 @@ const MovableItem = ({ item, index, laneIndex, onOpenModal, deleteBlock }) => {
 
   return (
     <Popover>
-      <PopoverTrigger>
         <Box
           ref={drag}
           display="flex"
@@ -47,21 +56,43 @@ const MovableItem = ({ item, index, laneIndex, onOpenModal, deleteBlock }) => {
             </Text>
           </Box>
 
-          {/* Right Section with Delete Button */}
-          <Box display="flex" gap={2}>
-            {/* Delete Button */}
-            <Tooltip label="Delete Block" aria-label="Delete Tooltip">
-              <IconButton
-                size="sm"
-                icon={<FiTrash2 />}
-                aria-label="Delete Block"
-                colorScheme="red"
-                onClick={() => deleteBlock(index, laneIndex)}
-              />
-            </Tooltip>
-          </Box>
+          
+
+          <Menu>
+            <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+              Actions
+            </MenuButton>
+            <MenuList>
+              <MenuItem>Download</MenuItem>
+              <MenuItem>Create a Copy</MenuItem>
+              <MenuItem>Mark as Draft</MenuItem>
+              <MenuItem>
+                {/* Right Section with Delete Button */}
+              <Box display="flex" gap={2}>
+                {/* Delete Button */}
+                <Tooltip label="Delete Block" aria-label="Delete Tooltip">
+                  <IconButton
+                    size="sm"
+                    icon={<FiTrash2 />}
+                    aria-label="Delete Block"
+                    colorScheme="red"
+                    onClick={() => deleteBlock(index, laneIndex)}
+                  />
+                </Tooltip>
+              </Box>
+              </MenuItem>
+              <MenuItem>
+              <PopoverTrigger>
+                <Text>Hi</Text>
+                </PopoverTrigger>
+              </MenuItem>
+            </MenuList>
+          </Menu>
+
+
+
+
         </Box>
-      </PopoverTrigger>
       
       {/* Popover Content */}
       <PopoverContent bg="white" color="black" w="200px">
